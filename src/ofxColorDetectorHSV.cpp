@@ -1,5 +1,5 @@
 #include "ofxColorDetectorHSV.h"
-
+#include <omp.h>
 void ofxColorDetectorHSV::update(const ofTexture & texture)
 {
 	ofPixels pixels;
@@ -9,6 +9,8 @@ void ofxColorDetectorHSV::update(const ofTexture & texture)
 	ofPixels hsvPixels;
 	hsvPixels = hsvImg.getPixels();
 	auto& maskPixels = mask.getPixels();
+	#pragma omp parallel
+	//shaderÇ≈èëÇ≠ÅEÅEÅE
 	for (int i = 0; i < texture.getWidth()*texture.getHeight(); i++) {
 		auto hue = hsvPixels[i * 3];
 		auto saturation = hsvPixels[i * 3 + 1];
@@ -123,6 +125,7 @@ void ofxColorDetectorHSV::exportSettings(string fileName)
 	json["minArea"] = minArea;
 	json["maxArea"] = maxArea;
 	json["nConsidered"] = nConsidered;
+	json.save(fileName);
 }
 
 const vector<ofxCvBlob>& ofxColorDetectorHSV::getBlobs()

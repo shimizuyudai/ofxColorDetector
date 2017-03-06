@@ -100,6 +100,7 @@ void ofxColorDetector::exportSettings(string fileName)
 	json["maxArea"] = maxArea;
 	json["nConsidered"] = nConsidered;
 	json["distanceThreshold"] = distanceThreshold;
+	json.save(fileName);
 }
 
 const vector<ofxCvBlob>& ofxColorDetector::getBlobs()
